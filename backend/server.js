@@ -7,13 +7,15 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const config = require('./config/key');
 const mongoose = require('mongoose');
-mongoose.connect(config.mongoURI, 
-{
-    useNewUrlParser: true, useUnifiedTopology: true,
-    useCreateIndex: true, useFindAndModify: false
-  })
-  .then(() => console.log('MongoDB Connected...'))
-  .catch(err => console.log(err));
+const dotenv = require("dotenv");
+
+dotenv.config({ path:'./../.env' });
+
+mongoose.connect(process.env.MONGODB_URI).then(()=>{
+    console.log("Connected to ");
+}).catch(err =>{
+    console.log(err.message);
+});
 
 app.use(cors())
 
